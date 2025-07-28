@@ -1,47 +1,121 @@
-# Svelte + TS + Vite
+# 🦆 DuckDB Analytics - S3 CSV Query Tool
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+ブラウザ上でDuckDB WebAssemblyを使ってS3のCSVファイルに直接SQLクエリを実行できるWebアプリケーションです。
 
-## Recommended IDE Setup
+![DuckDB Analytics Screenshot](https://img.shields.io/badge/Status-Demo%20Ready-brightgreen)
+![Tech Stack](https://img.shields.io/badge/Tech-Svelte%20%2B%20TypeScript%20%2B%20DuckDB%20WASM-blue)
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## ✨ 特徴
 
-## Need an official Svelte framework?
+- 🚀 **高速クエリ実行**: DuckDB WebAssemblyによる高性能な分析処理
+- 📊 **S3直接アクセス**: サーバーを経由せずブラウザから直接S3のCSVファイルを読み込み
+- 🎨 **モダンUI**: TailwindCSSによる青基調の美しいインターフェース
+- 📱 **レスポンシブデザイン**: デスクトップ・タブレット・モバイル対応
+- 🔢 **スマートフォーマット**: 数値の3桁区切り表示、日付の自動判定・整形
+- 🎯 **型判定**: 数値・日付・真偽値を自動判定して適切に表示
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+## 🎪 デモデータ
 
-## Technical considerations
+以下のデータセットでクエリを試すことができます：
 
-**Why use this over SvelteKit?**
+- **サンプルデータ**: テスト用の基本的なデータセット
+- **売上データ（書籍ECサイト）**: カテゴリ別売上分析用データ
+- **売上データ（日付別分析）**: 時系列分析用データ
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## 🚀 セットアップ & 実行
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+### 必要な環境
+- Node.js 18+
+- npm または yarn
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+### インストール & 起動
+```bash
+# リポジトリをクローン
+git clone https://github.com/ssatohworking/duckdb-wasm-ui.git
+cd duckdb-wasm-ui
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+# 依存関係をインストール
+npm install
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+# 開発サーバーを起動
+npm run dev
 ```
+
+ブラウザで `http://localhost:5173` にアクセス
+
+### ビルド
+```bash
+# プロダクション用ビルド
+npm run build
+
+# ビルド結果をプレビュー
+npm run preview
+```
+
+## 🛠️ 技術スタック
+
+- **フロントエンド**: Svelte + TypeScript
+- **ビルドツール**: Vite
+- **スタイリング**: TailwindCSS + PostCSS
+- **データベース**: DuckDB WebAssembly
+- **データソース**: Amazon S3 (CSV)
+
+## 📁 プロジェクト構造
+
+```
+src/
+├── App.svelte          # メインアプリケーション
+├── app.css            # グローバルスタイル
+├── main.ts            # エントリーポイント
+└── lib/
+    ├── db.ts          # DuckDB初期化
+    ├── query.ts       # クエリ実行ロジック
+    └── _duckdb-runner.ts # DuckDB実行環境
+public/
+├── duckdb-*.wasm      # DuckDB WebAssembly
+└── *.csv              # サンプルデータ
+```
+
+## 💡 使い方
+
+1. **データソースを選択**: プルダウンから分析したいCSVファイルを選択
+2. **SQLクエリを入力**: テキストエリアにSQLを記述（デフォルトクエリも利用可能）
+3. **クエリを実行**: 「クエリ実行」ボタンをクリック
+4. **結果を確認**: テーブル形式で結果を表示、数値や日付は自動フォーマット
+
+## 🎯 特徴的な機能
+
+### 自動型判定・フォーマット
+- **数値**: 3桁区切り表示、右寄せ
+- **日付**: 自動判定してJST表示
+- **真偽値**: true/false表示
+- **行ストライプ**: 見やすい交互配色
+
+### パフォーマンス最適化
+- DuckDB WebAssemblyによる高速処理
+- ブラウザ内完結でサーバー負荷なし
+- 大容量CSVファイルにも対応
+
+## 🎤 LT発表用
+
+このプロジェクトはLT（Lightning Talk）発表のデモ用に作成されました。
+- **テーマ**: ブラウザでのデータ分析の民主化
+- **デモポイント**: S3→DuckDB→Webブラウザの流れるような処理
+
+## 🤝 コントリビューション
+
+Issue・PRは歓迎です！以下のような改善アイデアがあります：
+- 新しいデータソースの追加
+- UIの改善
+- クエリテンプレートの追加
+- エクスポート機能
+
+## 📄 ライセンス
+
+MIT License
+
+## 🔗 関連リンク
+
+- [DuckDB](https://duckdb.org/) - 高性能分析データベース
+- [Svelte](https://svelte.dev/) - モダンフロントエンドフレームワーク
+- [Vite](https://vitejs.dev/) - 高速ビルドツール
