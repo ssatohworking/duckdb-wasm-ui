@@ -20,6 +20,26 @@
       label: '売上データ（日付別分析）', 
       defaultQuery: 'SELECT order_date, COUNT(*) as 注文数, SUM(final_amount) as 売上合計, AVG(final_amount) as 平均単価 FROM people GROUP BY order_date ORDER BY order_date DESC LIMIT 10' 
     },
+    { 
+      value: 'iis_access_log.csv', 
+      label: 'Webアクセスログ（IIS風・20万行）', 
+      defaultQuery: 'SELECT status_code, COUNT(*) as アクセス数, AVG(response_time_ms) as 平均応答時間ms FROM people GROUP BY status_code ORDER BY アクセス数 DESC' 
+    },
+    { 
+      value: 'iis_access_log.csv', 
+      label: 'アクセスログ（時間別分析）', 
+      defaultQuery: 'SELECT strftime(\'%H\', datetime) as 時間帯, COUNT(*) as アクセス数, AVG(response_size) as 平均レスポンスサイズ FROM people GROUP BY 時間帯 ORDER BY 時間帯' 
+    },
+    { 
+      value: 'iis_access_log.csv', 
+      label: 'アクセスログ（エラー分析）', 
+      defaultQuery: 'SELECT url_path, status_code, COUNT(*) as エラー数 FROM people WHERE status_code >= 400 GROUP BY url_path, status_code ORDER BY エラー数 DESC LIMIT 20' 
+    },
+    { 
+      value: 'iis_access_log.csv', 
+      label: 'アクセスログ（人気ページ）', 
+      defaultQuery: 'SELECT url_path, COUNT(*) as アクセス数, AVG(response_time_ms) as 平均応答時間ms FROM people WHERE status_code = 200 AND method = \'GET\' GROUP BY url_path ORDER BY アクセス数 DESC LIMIT 15' 
+    },
     // 追加のCSVファイルはここに定義
   ];
 
