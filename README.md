@@ -114,6 +114,10 @@ Issue・PRは歓迎です！以下のような改善アイデアがあります�
 
 MIT License
 
+## 🏗️ アーキテクチャ
+
+システムの詳細な構成図とデータフローについては [ARCHITECTURE.md](./ARCHITECTURE.md) をご覧ください。
+
 ## 🔗 関連リンク
 
 - [DuckDB](https://duckdb.org/) - 高性能分析データベース
