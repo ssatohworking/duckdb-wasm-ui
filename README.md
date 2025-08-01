@@ -39,9 +39,13 @@ npm install
 
 # 開発サーバーを起動
 npm run dev
+
+# WSL2環境の場合（Windows + WSL2）
+npm run dev:wsl
 ```
 
-ブラウザで `http://localhost:5173` にアクセス
+ブラウザで `http://localhost:5173` にアクセス  
+**WSL2環境の場合**: Windows側ブラウザから `http://[WSL2-IP]:5173` でアクセス
 
 ### ビルド
 ```bash
